@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Professor } from '../models/Professor';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-professores',
@@ -9,6 +10,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class ProfessoresComponent implements OnInit {
 
+  public modalRef: BsModalRef;
   public professorForm: FormGroup;
   public professorSelected: Professor;
   public title = 'Professores';
@@ -21,8 +23,12 @@ export class ProfessoresComponent implements OnInit {
     { id: 4, nome: 'Eduarda', disciplina: 'Geografia' },
     { id: 5, nome: 'Lucas', disciplina: 'Programação' }
   ];
+ 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private modalService: BsModalService) {
     this.criarForm();
   }
 
@@ -31,8 +37,8 @@ export class ProfessoresComponent implements OnInit {
 
   criarForm() {
     this.professorForm = this.fb.group({
-      nome: [''],
-      disciplina: ['']
+      nome: ['', Validators.required],
+      disciplina: ['', Validators.required]
     });
   }
 
@@ -42,7 +48,7 @@ export class ProfessoresComponent implements OnInit {
 
   professorSelect(professor: Professor) {
     this.professorSelected = professor;
-    this.professorForm.
+    this.professorForm.patchValue(professor);
   }
 
   voltar() {
