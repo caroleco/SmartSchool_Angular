@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SmartSchool_WAPI.Data;
+using SmartSchool_WAPI.Models;
 
 namespace SmartSchool_WAPI.Controllers
 {
@@ -63,13 +64,47 @@ namespace SmartSchool_WAPI.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post(Aluno model)
         {
+            try
+            {
+                _repo.Add(model);
+
+                if(await _repo.SaveChangesAsync()){
+                    return Ok(model);
+                }                
+            }
+            catch (System.Exception)
+            {                
+                throw;
+            }
+
+            return BadRequest("Erro ao salvar");
         }
 
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{AlunoId}")]
+        public async Task<IActionResult> Put(int AlunoId, Aluno model)
         {
+            try
+            {
+                var aluno = await _repo.GetAlunoAsyncById(AlunoId, false);
+
+                if(aluno == null){
+                    return NotFound();
+                }
+
+                _repo.Update(model);
+
+                if(await _repo.SaveChangesAsync()){
+                    return Ok(model);
+                }                
+            }
+            catch (System.Exception)
+            {                
+                throw;
+            }
+
+            return BadRequest("Erro ao salvar");
         }
 
         [HttpDelete("{id}")]
