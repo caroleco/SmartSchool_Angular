@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SmartSchool_WAPI.Models;
 
-namespace SmartSchool_WAPI
+namespace SmartSchool_WAPI.Data
 {
     public class DataContext : DbContext
     {

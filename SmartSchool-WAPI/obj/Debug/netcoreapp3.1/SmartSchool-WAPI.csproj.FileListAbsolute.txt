@@ -79,3 +79,7 @@ F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Deb
 F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Debug\netcoreapp3.1\runtimes\win-x64\native\e_sqlite3.dll
 F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\e_sqlite3.dll
 f:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\obj\Debug\netcoreapp3.1\SmartSchool-WAPI.csproj.CopyComplete
+F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+F:\TrabalhoCarol\estudo\angular.net\SmartSchool_Angular\SmartSchool-WAPI\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll

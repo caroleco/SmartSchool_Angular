@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SmartSchool_WAPI
+namespace SmartSchool_WAPI.Models
 {
     public class AlunoDisciplina
     {
@@ -19,6 +19,8 @@ namespace SmartSchool_WAPI
         public Aluno Aluno { get; set; }
         public int DisciplinaId { get; set; }
         public Disciplina Disciplina { get; set; }
+
+        
 
     }
 }

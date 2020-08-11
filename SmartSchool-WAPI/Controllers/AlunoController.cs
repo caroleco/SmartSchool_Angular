@@ -3,23 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SmartSchool_WAPI.Data;
 
-namespace SmartSchool_WAPI
+namespace SmartSchool_WAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class AlunoController : ControllerBase
     {
-        [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        private readonly IRepository _repo;
+        public AlunoController(IRepository repo)
         {
-            return new string[] { "value1", "value2" };
+            this._repo = repo;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var result = await _repo.GetAllAlunosAsync(true);
+
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {                
+                throw;
+            }
         }
 
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            try
+            {
+                var result = await _repo.GetAlunoAsyncById(id, true);
+
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {                
+                throw;
+            }
+        }
+
+        [HttpGet("ByDisciplina/{discId}")]
+        public async Task<IActionResult> GetByIdDisciplina(int discid)
+        {
+            try
+            {
+                var result = await _repo.GetAlunosAsyncByDisciplinaId(discid, false);
+
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {                
+                throw;
+            }
         }
 
         [HttpPost]

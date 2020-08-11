@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using SmartSchool_WAPI;
+using SmartSchool_WAPI.Data;
 
 namespace SmartSchool_WAPI.Migrations
 {
@@ -15,7 +15,7 @@ namespace SmartSchool_WAPI.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.7");
 
-            modelBuilder.Entity("SmartSchool_WAPI.Aluno", b =>
+            modelBuilder.Entity("SmartSchool_WAPI.Models.Aluno", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace SmartSchool_WAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SmartSchool_WAPI.AlunoDisciplina", b =>
+            modelBuilder.Entity("SmartSchool_WAPI.Models.AlunoDisciplina", b =>
                 {
                     b.Property<int>("AlunoId")
                         .HasColumnType("INTEGER");
@@ -218,7 +218,7 @@ namespace SmartSchool_WAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SmartSchool_WAPI.Disciplina", b =>
+            modelBuilder.Entity("SmartSchool_WAPI.Models.Disciplina", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +269,7 @@ namespace SmartSchool_WAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SmartSchool_WAPI.Professor", b =>
+            modelBuilder.Entity("SmartSchool_WAPI.Models.Professor", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -310,25 +310,25 @@ namespace SmartSchool_WAPI.Migrations
                         });
                 });
 
-            modelBuilder.Entity("SmartSchool_WAPI.AlunoDisciplina", b =>
+            modelBuilder.Entity("SmartSchool_WAPI.Models.AlunoDisciplina", b =>
                 {
-                    b.HasOne("SmartSchool_WAPI.Aluno", "Aluno")
-                        .WithMany()
+                    b.HasOne("SmartSchool_WAPI.Models.Aluno", "Aluno")
+                        .WithMany("AlunosDisciplinas")
                         .HasForeignKey("AlunoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SmartSchool_WAPI.Disciplina", "Disciplina")
-                        .WithMany()
+                    b.HasOne("SmartSchool_WAPI.Models.Disciplina", "Disciplina")
+                        .WithMany("AlunosDisciplinas")
                         .HasForeignKey("DisciplinaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("SmartSchool_WAPI.Disciplina", b =>
+            modelBuilder.Entity("SmartSchool_WAPI.Models.Disciplina", b =>
                 {
-                    b.HasOne("SmartSchool_WAPI.Professor", "Professor")
-                        .WithMany("disciplinas")
+                    b.HasOne("SmartSchool_WAPI.Models.Professor", "Professor")
+                        .WithMany("Disciplinas")
                         .HasForeignKey("ProfessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
