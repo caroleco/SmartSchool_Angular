@@ -107,9 +107,30 @@ namespace SmartSchool_WAPI.Controllers
             return BadRequest("Erro ao salvar");
         }
 
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{AlunoId}")]
+        public async Task<IActionResult> Delete(int AlunoId)
         {
+            try
+            {
+                var aluno = await _repo.GetAlunoAsyncById(AlunoId, false);
+
+                if(aluno == null){
+                    return NotFound();
+                }
+
+                _repo.Delete(aluno);
+
+                if(await _repo.SaveChangesAsync()){
+                    return Ok("Deletado");
+                }   
+                
+            }
+            catch (System.Exception)
+            {                
+                throw;
+            }
+
+            return BadRequest("Erro ao salvar");
         }
     }
 }
