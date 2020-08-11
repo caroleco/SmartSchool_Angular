@@ -90,7 +90,7 @@ namespace SmartSchool_WAPI.Controllers
                 var aluno = await _repo.GetAlunoAsyncById(AlunoId, false);
 
                 if(aluno == null){
-                    return NotFound();
+                    return NotFound("Aluno não encontrado");
                 }
 
                 _repo.Update(model);
