@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Professor } from '../models/Professor';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import {ProfessorService} from './professor.service';
 
 @Component({
   selector: 'app-professores',
@@ -16,34 +17,54 @@ export class ProfessoresComponent implements OnInit {
   public title = 'Professores';
   public simpleText: string;
 
-  professores = [
-    { id: 1, nome: 'Amadeu', disciplina: 'Matemática' },
-    { id: 2, nome: 'Bruno', disciplina: 'Português' },
-    { id: 3, nome: 'Larissa', disciplina: 'História' },
-    { id: 4, nome: 'Eduarda', disciplina: 'Geografia' },
-    { id: 5, nome: 'Lucas', disciplina: 'Programação' }
-  ];
+  professores = [];
  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
-  constructor(private fb: FormBuilder, private modalService: BsModalService) {
+  constructor(private fb: FormBuilder, private modalService: BsModalService,
+    private professorService: ProfessorService) {
     this.criarForm();
   }
 
   ngOnInit(): void {
+    this.carregarProfessores();
+  }
+
+  carregarProfessores() {
+    this.professorService.getAll().subscribe(
+      (professores: Professor[]) => {
+        this.professores = professores;
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
   }
 
   criarForm() {
     this.professorForm = this.fb.group({
+      id:[''],
       nome: ['', Validators.required],
-      disciplina: ['', Validators.required]
+      disciplina: ['']
     });
   }
 
+  salvarProfessor(prof: Professor) {
+    this.professorService.put(prof.id, prof).subscribe(
+      (prof: Professor) => {
+        console.log(prof);
+        this.carregarProfessores();
+      },
+      (erro: any) =>{
+        console.error(erro);
+      }
+    );
+  }
+
   professorSubmit() {
-    console.log(this.professorForm.value);
+    this.salvarProfessor(this.professorForm.value);
   }
 
   professorSelect(professor: Professor) {

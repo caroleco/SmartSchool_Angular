@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 import { Aluno } from '../models/Aluno';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { AlunoService } from './aluno.service'
 @Component({
   selector: 'app-alunos',
   templateUrl: './alunos.component.html',
@@ -13,37 +14,56 @@ export class AlunosComponent implements OnInit {
   public alunoForm: FormGroup;
   public alunoSelected: Aluno;
   public title = 'Alunos';
+  public alunos = [];
 
-  alunos = [
-    { id: 1, nome: 'Marta', sobrenome: 'Silva', telefone: 32998965874 },
-    { id: 2, nome: 'Paula', sobrenome: 'Oliveira', telefone: 32984565625 },
-    { id: 3, nome: 'Laura', sobrenome: 'Santos', telefone: 32984525654 },
-    { id: 4, nome: 'Pedro', sobrenome: 'Moreira', telefone: 32987541452 },
-    { id: 5, nome: 'Paulo', sobrenome: 'Medeiros', telefone: 32984547541 },
-  ];
-  
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
   }
 
   constructor(private fb: FormBuilder,
-    private modalService: BsModalService) {
+    private modalService: BsModalService,
+    private alunoService: AlunoService) {
     this.criarForm();
   }
 
   ngOnInit(): void {
+    this.carregarAlunos();
+  }
+
+  carregarAlunos() {
+    this.alunoService.getAll().subscribe(
+      (alunos: Aluno[]) => {
+        this.alunos = alunos;
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
   }
 
   criarForm() {
     this.alunoForm = this.fb.group({
+      id: [''],
       nome: ['', Validators.required],
       sobrenome: ['', Validators.required],
       telefone: ['', Validators.required]
     });
   }
 
+  salvarAluno(aluno: Aluno) {
+    this.alunoService.put(aluno.id, aluno).subscribe(
+      (aluno: Aluno) => {
+        console.log(aluno);
+        this.carregarAlunos();
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
+  }
+
   alunoSubmit() {
-    console.log(this.alunoForm.value)
+    this.salvarAluno(this.alunoForm.value)
   }
 
   alunoSelect(aluno: Aluno) {
@@ -51,9 +71,14 @@ export class AlunosComponent implements OnInit {
     this.alunoForm.patchValue(aluno);
   }
 
-  voltar() {
-    this.alunoSelected = null;
+  cadastrar() {
+    this.alunoSelected = new Aluno();
+    this.alunoForm.patchValue(this.alunoSelected);
   }
+
+voltar() {
+  this.alunoSelected = null;
+}
 
 
 }

@@ -1,57 +1,53 @@
-<div class="row">
-  <div class="col-sm-6" *ngIf="professorSelected">
-    <div class="row">
-      <div class="mr-auto">
-        <app-titulo [title]="'Cód. Professor:' + professorSelected.id"></app-titulo>
-      </div>
-      <div class="mt-1">
-        <button class="btn btn-outline-danger" (click)="voltar()">Fechar</button>
-      </div>
+<div *ngIf="professorSelected">
+  <app-titulo [title]="'Professor:' + professorSelected.id">
+    <button class="btn btn-outline-danger" (click)="voltar()">Listar Professores</button>
+  </app-titulo>
+
+  <form [formGroup]="professorForm" (submit)="professorSubmit()">
+    <div class="form-group">
+      <label for="formGroupExampleInput">Nome</label>
+      <input type="text" formControlName="nome" class="form-control">
     </div>
-    <br>
-    <form [formGroup]="professorForm" (submit)="professorSubmit()">
-      <div class="form-group">
-        <label for="formGroupExampleInput">Nome</label>
-        <input type="text" formControlName="nome" class="form-control">
-      </div>
-      <div class="form-group">
+    <!-- <div class="form-group">
         <label for="formGroupExampleInput2">Disciplina</label>
         <input type="text" formControlName="disciplina" class="form-control">
-      </div>
-      <div class="form-group">
-        <hr>
-        <button class="btn btn-success" [disabled]="!professorForm.valid">Enviar</button>
-      </div>
-    </form>
-  </div>
-  <div [ngClass]="{'col-sm-6':professorSelected, 'col-sm-12': !professorSelected}">
-    <app-titulo [title]="title"></app-titulo>
+      </div> -->
+    <div class="form-group">
+      <hr>
+      <button class="btn btn-success" [disabled]="!professorForm.valid">Enviar</button>
+    </div>
+  </form>
+</div>
+<div [ngClass]="{'col-sm-6':professorSelected, 'col-sm-12': !professorSelected}">
+  <app-titulo [title]="title">
+    <button class="btn btn-outline-success">Cadastrar</button>
+  </app-titulo>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Visualizar</th>
-          <th scope="col">#</th>
-          <th scope="col">Nome</th>
-          <th scope="col">Disciplina</th>
-          <th scope="col">Opções</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor='let prof of professores'>
-          <td>
-            <button (click)="professorSelect(prof)" class="text-dark btn-outline-warning">detalhes</button>
-          </td>
-          <th scope="row">{{prof.id}}</th>
-          <td>{{prof.nome}}</td>
-          <td>{{prof.disciplina}}</td>
-          <td>
-            <div class="btn-group"><button (click)="openModal(template)" class="btn btn-outline-primary">alunos</button></div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Visualizar</th>
+        <th scope="col">#</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Disciplina</th>
+        <th scope="col">Opções</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor='let prof of professores'>
+        <td>
+          <button (click)="professorSelect(prof)" class="text-dark btn-outline-warning">detalhes</button>
+        </td>
+        <th scope="row">{{prof.id}}</th>
+        <td>{{prof.nome}}</td>
+        <td>{{prof.disciplina}}</td>
+        <td>
+          <div class="btn-group"><button (click)="openModal(template)" class="btn btn-outline-primary">alunos</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <ng-template #template>
@@ -59,8 +55,7 @@
     Modal
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn pull-right" aria-label="Close" 
-    (click)="modalRef.hide()">
+    <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef.hide()">
       Fechar
     </button>
   </div>
