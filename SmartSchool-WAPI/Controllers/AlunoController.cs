@@ -28,7 +28,7 @@ namespace SmartSchool_WAPI.Controllers
                 return Ok(result);
             }
             catch (System.Exception)
-            {                
+            {
                 throw;
             }
         }
@@ -43,7 +43,7 @@ namespace SmartSchool_WAPI.Controllers
                 return Ok(result);
             }
             catch (System.Exception)
-            {                
+            {
                 throw;
             }
         }
@@ -58,7 +58,7 @@ namespace SmartSchool_WAPI.Controllers
                 return Ok(result);
             }
             catch (System.Exception)
-            {                
+            {
                 throw;
             }
         }
@@ -70,12 +70,13 @@ namespace SmartSchool_WAPI.Controllers
             {
                 _repo.Add(model);
 
-                if(await _repo.SaveChangesAsync()){
+                if (await _repo.SaveChangesAsync())
+                {
                     return Ok(model);
-                }                
+                }
             }
             catch (System.Exception)
-            {                
+            {
                 throw;
             }
 
@@ -89,18 +90,20 @@ namespace SmartSchool_WAPI.Controllers
             {
                 var aluno = await _repo.GetAlunoAsyncById(AlunoId, false);
 
-                if(aluno == null){
+                if (aluno == null)
+                {
                     return NotFound("Aluno não encontrado");
                 }
 
                 _repo.Update(model);
 
-                if(await _repo.SaveChangesAsync()){
+                if (await _repo.SaveChangesAsync())
+                {
                     return Ok(model);
-                }                
+                }
             }
             catch (System.Exception)
-            {                
+            {
                 throw;
             }
 
@@ -114,19 +117,21 @@ namespace SmartSchool_WAPI.Controllers
             {
                 var aluno = await _repo.GetAlunoAsyncById(AlunoId, false);
 
-                if(aluno == null){
+                if (aluno == null)
+                {
                     return NotFound();
                 }
 
                 _repo.Delete(aluno);
 
-                if(await _repo.SaveChangesAsync()){
-                    return Ok("Deletado");
-                }   
-                
+                if (await _repo.SaveChangesAsync())
+                {
+                    return Ok(new { message = "Deletado" });
+                }
+
             }
             catch (System.Exception)
-            {                
+            {
                 throw;
             }
 

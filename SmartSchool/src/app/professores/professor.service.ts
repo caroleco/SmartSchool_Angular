@@ -25,7 +25,7 @@ export class ProfessorService {
     return this.http.post(`${this.mainUrl}`, prof);
   }
 
-  put(id:number, prof:Professor){
-    return this.http.put(`${this.mainUrl}/${id}`, prof);
+  put(prof:Professor){
+    return this.http.put(`${this.mainUrl}/${prof.id}`, prof);
   }
 }

@@ -16,7 +16,7 @@ export class ProfessoresComponent implements OnInit {
   public professorSelected: Professor;
   public title = 'Professores';
   public simpleText: string;
-
+  public modo = 'post';
   professores = [];
  
   openModal(template: TemplateRef<any>) {
@@ -51,8 +51,10 @@ export class ProfessoresComponent implements OnInit {
     });
   }
 
+
   salvarProfessor(prof: Professor) {
-    this.professorService.put(prof.id, prof).subscribe(
+    (prof.id === 0) ? this.modo = 'post' : this.modo = 'put';
+    this.professorService[this.modo](prof).subscribe(
       (prof: Professor) => {
         console.log(prof);
         this.carregarProfessores();
@@ -70,6 +72,11 @@ export class ProfessoresComponent implements OnInit {
   professorSelect(professor: Professor) {
     this.professorSelected = professor;
     this.professorForm.patchValue(professor);
+  }
+
+  cadastrar(){
+    this.professorSelected = new Professor();
+    this.professorForm.patchValue(this.professorSelected);
   }
 
   voltar() {

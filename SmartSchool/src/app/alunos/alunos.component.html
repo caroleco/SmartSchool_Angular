@@ -2,7 +2,7 @@
   <div class="col-sm-6" *ngIf="alunoSelected">
 
 
-    <app-titulo [title]="'Aluno:' + alunoSelected.id">
+    <app-titulo [title]="(alunoSelected.id == 0 ? 'Novo Aluno' : 'Aluno : ' + alunoSelected.id)">
       <button class="btn btn-warning" (click)="voltar()">Fechar</button>
     </app-titulo>
     
@@ -21,7 +21,7 @@
       </div>
       <div class="form-group">
         <hr>
-        <button class="btn btn-success" [disabled]="!alunoForm.valid">Enviar</button>
+        <button class="btn btn-success" [disabled]="!alunoForm.valid">Salvar</button>
       </div>
     </form>
   </div>
@@ -52,10 +52,8 @@
           <td>{{aluno.telefone}}</td>
           <td>
             <div class="btn-group">
-              <i class="fas fa-edit"></i>
-              <i class="fas fa-trash"></i>
               <button (click)="openModal(template)" class="btn btn-primary">Professores</button>
-              <button class="btn btn-danger">Desativar</button>
+              <button class="btn btn-danger" (click)="deletarAluno(aluno)">Deletar</button>
             </div>
           </td>
         </tr>

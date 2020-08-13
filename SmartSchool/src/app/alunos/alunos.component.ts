@@ -15,6 +15,7 @@ export class AlunosComponent implements OnInit {
   public alunoSelected: Aluno;
   public title = 'Alunos';
   public alunos = [];
+  public modo = 'post';
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
@@ -51,7 +52,9 @@ export class AlunosComponent implements OnInit {
   }
 
   salvarAluno(aluno: Aluno) {
-    this.alunoService.put(aluno.id, aluno).subscribe(
+    (aluno.id === 0) ? this.modo = 'post' : this.modo = 'put';
+
+    this.alunoService[this.modo](aluno).subscribe(
       (aluno: Aluno) => {
         console.log(aluno);
         this.carregarAlunos();
@@ -76,9 +79,21 @@ export class AlunosComponent implements OnInit {
     this.alunoForm.patchValue(this.alunoSelected);
   }
 
-voltar() {
-  this.alunoSelected = null;
-}
+  deletarAluno(aluno: Aluno) {
+    this.alunoService.delete(aluno.id).subscribe(
+      (model: any) => {
+        console.log(model);
+        this.carregarAlunos();
+      },
+      (erro: any) => {
+        console.error(erro);
+      }
+    );
+  }
+
+  voltar() {
+    this.alunoSelected = null;
+  }
 
 
 }
